@@ -156,7 +156,7 @@ body.dark-mode .name {
 }
 
 body.dark-mode .project-list li {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid #444;
 }
 
 .project-list li:hover {
@@ -164,10 +164,10 @@ body.dark-mode .project-list li {
 }
 
 .project-list h3 {
-  font-size: 1.6rem;
-  font-weight: 800;
+  font-size: 1.2rem;
+  font-weight: 500;
   letter-spacing: -0.5px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   color: #111;
   transition: color 0.3s ease;
 }
@@ -227,16 +227,6 @@ body.dark-mode .project-list p {
 .contact-value {
   font-size: 1.3rem;
   font-weight: 700;
-}
-
-body.dark-mode .project-list li {
-  border-color: #444;
-}
-
-.project-list h3 {
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin-bottom: 4px;
 }
 
 .info-section {
