@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, NavLink } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import './App.css';
 import { skillsWithIcons } from './skillsData';
 
@@ -141,6 +142,7 @@ function App() {
           ))}
         </div>
       </div>
+      <Analytics />
     </div>
   );
 }
