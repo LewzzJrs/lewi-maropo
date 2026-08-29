@@ -96,16 +96,6 @@ body.dark-mode .name {
   opacity: 1;
 }
 
-.bio {
-  position: absolute;
-  bottom: 40px;
-  right: 40px;
-  text-align: left;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.5;
-}
-
 .theme-toggle {
   /* reset gaya bawaan <button> agar tampil sama seperti sebelumnya */
   background: none;
@@ -227,29 +217,6 @@ body.dark-mode .project-list p {
 .contact-value {
   font-size: 1.3rem;
   font-weight: 700;
-}
-
-.info-section {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 15px;
-}
-
-.profile-image {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-  filter: grayscale(100%);
-  transition:
-    filter 0.3s ease,
-    transform 0.3s ease;
-}
-
-.profile-image:hover {
-  filter: grayscale(0%);
-  transform: scale(1.05);
 }
 
 .skills-grid {
