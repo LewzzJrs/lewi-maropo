@@ -1,75 +1,66 @@
-# React + TypeScript + Vite
+# Lewi Maropo — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio site built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+**Live:** [lewi-maropo.vercel.app](https://lewi-maropo.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Minimalist single-frame layout with animated skill marquees
+- Dark mode that follows your OS preference and remembers your choice
+- Client-side routing across Projects, Skills, and Contact
+- Responsive down to mobile, keyboard accessible
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+| | |
+|---|---|
+| Framework | React 19 |
+| Language | TypeScript |
+| Build tool | Vite 8 |
+| Routing | React Router 7 |
+| Styling | Plain CSS |
+| Analytics | Vercel Web Analytics |
+| Hosting | Vercel |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Requires Node.js 20 or newer.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The dev server runs at `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the dev server with hot reload |
+| `npm run build` | Type-check and build for production into `dist/` |
+| `npm run preview` | Serve the production build locally |
+| `npm run lint` | Run ESLint |
+
+## Project Structure
 
 ```
+public/            Static assets copied verbatim (favicon, SPA redirects)
+src/
+  App.tsx          Layout, navigation, theme toggle, marquees
+  App.css          All styling
+  skillsData.tsx   Skill names with inline SVG icons
+  pages/           Projects, Skills, Contact
+index.html         Document head, meta tags
+vercel.json        SPA rewrite so deep links resolve
+```
+
+## Deployment
+
+Pushing to `main` triggers a production deploy on Vercel automatically.
+
+Routing is client-side, so the host must serve `index.html` for unknown
+paths — otherwise `/skills` and `/contact` return 404 on refresh. Both
+configs are committed: `vercel.json` for Vercel, `public/_redirects` for
+Netlify and Cloudflare Pages.
