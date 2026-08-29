@@ -37,14 +37,20 @@ function App() {
         </a>
       </div>
 
-      <div className='theme-toggle' onClick={() => setIsDarkMode(!isDarkMode)}>
+      <button
+        type='button'
+        className='theme-toggle'
+        onClick={() => setIsDarkMode(!isDarkMode)}
+        aria-pressed={isDarkMode}
+        aria-label={isDarkMode ? 'Ganti ke mode terang' : 'Ganti ke mode gelap'}
+      >
         <span className='active-theme'>
           {isDarkMode ? '□ LIGHT' : '■ LIGHT'}
         </span>
         <span className='inactive-theme'>
           {isDarkMode ? '■ DARK' : '□ DARK'}
         </span>
-      </div>
+      </button>
 
       <header className='header'>
         <h1 className='name'>Lewi Maropo</h1>

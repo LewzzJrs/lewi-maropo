@@ -107,6 +107,12 @@ body.dark-mode .name {
 }
 
 .theme-toggle {
+  /* reset gaya bawaan <button> agar tampil sama seperti sebelumnya */
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font-family: inherit;
   position: absolute;
   left: -1vw;
   bottom: 1vw;
@@ -119,6 +125,11 @@ body.dark-mode .name {
   display: flex;
   gap: 10px;
   z-index: 10;
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
 }
 
 .content-container {
