@@ -42,7 +42,7 @@ function App() {
           {isDarkMode ? '□ LIGHT' : '■ LIGHT'}
         </span>
         <span className='inactive-theme'>
-          {isDarkMode ? '■ DARK' : '■ DARK'}
+          {isDarkMode ? '■ DARK' : '□ DARK'}
         </span>
       </div>
 
