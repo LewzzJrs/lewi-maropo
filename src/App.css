@@ -31,7 +31,8 @@ body.dark-mode {
   width: 95vw;
   max-width: 1600px;
   margin: 2vh auto;
-  height: 100%;
+  /* margin 2vh atas+bawah ikut dihitung agar tidak terpotong overflow:hidden */
+  height: calc(100% - 4vh);
   border: 1px solid #333;
   transition: border-color 0.3s ease;
 }
