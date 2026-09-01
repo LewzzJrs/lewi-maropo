@@ -13,15 +13,15 @@ Personal portfolio site built with React, TypeScript, and Vite.
 
 ## Tech Stack
 
-| | |
-|---|---|
-| Framework | React 19 |
-| Language | TypeScript |
-| Build tool | Vite 8 |
-| Routing | React Router 7 |
-| Styling | Plain CSS |
-| Analytics | Vercel Web Analytics |
-| Hosting | Vercel |
+|            |                      |
+| ---------- | -------------------- |
+| Framework  | React 19             |
+| Language   | TypeScript           |
+| Build tool | Vite 8               |
+| Routing    | React Router 7       |
+| Styling    | Plain CSS            |
+| Analytics  | Vercel Web Analytics |
+| Hosting    | Vercel               |
 
 ## Getting Started
 
@@ -36,12 +36,12 @@ The dev server runs at `http://localhost:5173`.
 
 ## Scripts
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Start the dev server with hot reload |
-| `npm run build` | Type-check and build for production into `dist/` |
-| `npm run preview` | Serve the production build locally |
-| `npm run lint` | Run ESLint |
+| Command           | Description                                      |
+| ----------------- | ------------------------------------------------ |
+| `npm run dev`     | Start the dev server with hot reload             |
+| `npm run build`   | Type-check and build for production into `dist/` |
+| `npm run preview` | Serve the production build locally               |
+| `npm run lint`    | Run ESLint                                       |
 
 ## Project Structure
 

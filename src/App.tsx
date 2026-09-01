@@ -7,6 +7,7 @@ import { skillsWithIcons } from './skillsData';
 import Projects from './pages/Projects';
 import Skills from './pages/Skills';
 import Contact from './pages/Contact';
+import Resume from './pages/Resume';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
@@ -93,6 +94,18 @@ function App() {
             </NavLink>
           </li>
           <li>
+            <NavLink to='/resume'>
+              {({ isActive }) => (
+                <>
+                  <span className='dot' style={{ opacity: isActive ? 1 : 0 }}>
+                    •
+                  </span>{' '}
+                  Resume
+                </>
+              )}
+            </NavLink>
+          </li>
+          <li>
             <NavLink to='/contact'>
               {({ isActive }) => (
                 <>
@@ -112,6 +125,7 @@ function App() {
           <Route path='/' element={<Projects />} />
           <Route path='/skills' element={<Skills />} />
           <Route path='/contact' element={<Contact />} />
+          <Route path='/resume' element={<Resume />} />
         </Routes>
       </div>
 

@@ -388,6 +388,79 @@ body.dark-mode .marquee-svg-only svg {
   fill: currentColor;
 }
 
+/* === Halaman /resume (template) === */
+.resume {
+  text-align: left;
+  max-height: 46vh;
+  overflow-y: auto;
+  padding-right: 14px;
+  font-weight: 400;
+}
+
+.resume-bagian {
+  margin-bottom: 32px;
+}
+
+.resume-nomor {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.5;
+  padding-bottom: 6px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+body.dark-mode .resume-nomor {
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+
+.resume-item {
+  margin-bottom: 20px;
+}
+
+.resume-periode {
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 2px;
+}
+
+.resume-judul {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin-bottom: 2px;
+}
+
+.resume-org {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+body.dark-mode .resume-org {
+  color: #aaa;
+}
+
+.resume-poin {
+  list-style: disc outside;
+  padding-left: 18px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.resume-poin li {
+  margin-bottom: 4px;
+}
+
+.resume-poin li::marker {
+  color: currentColor;
+  opacity: 0.45;
+}
+
 @media (max-width: 768px) {
   #root {
     padding: 15px;
@@ -517,6 +590,12 @@ body.dark-mode .marquee-svg-only svg {
 
   .contact-links {
     align-items: flex-start;
+  }
+
+  .resume {
+    max-height: none;
+    overflow-y: visible;
+    padding-right: 0;
   }
 
   .marquee-container {
