@@ -8,7 +8,7 @@ Personal portfolio site built with React, TypeScript, and Vite.
 
 - Minimalist single-frame layout with animated skill marquees
 - Dark mode that follows your OS preference and remembers your choice
-- Client-side routing across Projects, Skills, and Contact
+- Single page: every section is visible by scrolling, nav links jump to them
 - Responsive down to mobile, keyboard accessible
 
 ## Tech Stack
@@ -18,7 +18,6 @@ Personal portfolio site built with React, TypeScript, and Vite.
 | Framework  | React 19             |
 | Language   | TypeScript           |
 | Build tool | Vite 8               |
-| Routing    | React Router 7       |
 | Styling    | Plain CSS            |
 | Analytics  | Vercel Web Analytics |
 | Hosting    | Vercel               |
@@ -46,21 +45,18 @@ The dev server runs at `http://localhost:5173`.
 ## Project Structure
 
 ```
-public/            Static assets copied verbatim (favicon, SPA redirects)
+public/            Static assets copied verbatim (favicon)
 src/
   App.tsx          Layout, navigation, theme toggle, marquees
   App.css          All styling
   skillsData.tsx   Skill names with inline SVG icons
   pages/           Projects, Skills, Contact
 index.html         Document head, meta tags
-vercel.json        SPA rewrite so deep links resolve
 ```
 
 ## Deployment
 
 Pushing to `main` triggers a production deploy on Vercel automatically.
 
-Routing is client-side, so the host must serve `index.html` for unknown
-paths — otherwise `/skills` and `/contact` return 404 on refresh. Both
-configs are committed: `vercel.json` for Vercel, `public/_redirects` for
-Netlify and Cloudflare Pages.
+The site is a single page with anchor navigation, so no SPA rewrite
+config is needed — every URL other than `/` should legitimately 404.

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Routes, Route, NavLink } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import './App.css';
 import { skillsWithIcons } from './skillsData';
@@ -8,6 +7,13 @@ import Projects from './pages/Projects';
 import Skills from './pages/Skills';
 import Contact from './pages/Contact';
 import Resume from './pages/Resume';
+
+const bagian = [
+  { id: 'projects', label: 'Projects' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'resume', label: 'Resume' },
+  { id: 'contact', label: 'Contact' },
+];
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
@@ -20,6 +26,27 @@ function App() {
     document.body.classList.toggle('dark-mode', isDarkMode);
     localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
+
+  // Titik penanda di navigasi mengikuti bagian yang sedang terlihat.
+  const [bagianAktif, setBagianAktif] = useState<string>(bagian[0].id);
+
+  useEffect(() => {
+    const pengamat = new IntersectionObserver(
+      (entri) => {
+        entri.forEach((e) => {
+          if (e.isIntersecting) setBagianAktif(e.target.id);
+        });
+      },
+      { rootMargin: '-45% 0px -45% 0px' },
+    );
+
+    bagian.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) pengamat.observe(el);
+    });
+
+    return () => pengamat.disconnect();
+  }, []);
 
   return (
     <>
@@ -70,54 +97,19 @@ function App() {
 
       <nav className='navigation'>
         <ul>
-          <li>
-            <NavLink to='/' end>
-              {({ isActive }) => (
-                <>
-                  <span className='dot' style={{ opacity: isActive ? 1 : 0 }}>
-                    •
-                  </span>{' '}
-                  Projects
-                </>
-              )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/skills'>
-              {({ isActive }) => (
-                <>
-                  <span className='dot' style={{ opacity: isActive ? 1 : 0 }}>
-                    •
-                  </span>{' '}
-                  Skills
-                </>
-              )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/resume'>
-              {({ isActive }) => (
-                <>
-                  <span className='dot' style={{ opacity: isActive ? 1 : 0 }}>
-                    •
-                  </span>{' '}
-                  Resume
-                </>
-              )}
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to='/contact'>
-              {({ isActive }) => (
-                <>
-                  <span className='dot' style={{ opacity: isActive ? 1 : 0 }}>
-                    •
-                  </span>{' '}
-                  Contact
-                </>
-              )}
-            </NavLink>
-          </li>
+          {bagian.map(({ id, label }) => (
+            <li key={id}>
+              <a href={`#${id}`}>
+                <span
+                  className='dot'
+                  style={{ opacity: bagianAktif === id ? 1 : 0 }}
+                >
+                  •
+                </span>{' '}
+                {label}
+              </a>
+            </li>
+          ))}
         </ul>
       </nav>
 
@@ -168,12 +160,25 @@ function App() {
 
       {/* Area di bawah marquee: isi halaman yang sedang aktif. */}
       <div className='area-bawah'>
-        <Routes>
-          <Route path='/' element={<Projects />} />
-          <Route path='/skills' element={<Skills />} />
-          <Route path='/contact' element={<Contact />} />
-          <Route path='/resume' element={<Resume />} />
-        </Routes>
+        <section id='projects' className='bagian'>
+          <p className='bagian-label'>01 / Projects</p>
+          <Projects />
+        </section>
+
+        <section id='skills' className='bagian'>
+          <p className='bagian-label'>02 / Skills</p>
+          <Skills />
+        </section>
+
+        <section id='resume' className='bagian'>
+          <p className='bagian-label'>03 / Resume</p>
+          <Resume />
+        </section>
+
+        <section id='contact' className='bagian'>
+          <p className='bagian-label'>04 / Contact</p>
+          <Contact />
+        </section>
       </div>
     </>
   );
