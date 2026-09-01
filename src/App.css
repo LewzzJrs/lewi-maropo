@@ -560,13 +560,13 @@ body.dark-mode .bagian-label {
   .frame-container {
     width: 100%;
     height: auto;
-    min-height: calc(100vh - 30px);
+    min-height: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
     position: relative;
     padding: 20px;
-    padding-bottom: 100px;
+    padding-bottom: 150px;
   }
 
   .theme-toggle {
@@ -682,9 +682,9 @@ body.dark-mode .bagian-label {
 
   .foto-slot {
     width: 100%;
-    max-width: 200px;
-    height: 250px;
-    margin: 0;
+    max-width: 240px;
+    height: 280px;
+    margin: 8px auto 0;
   }
 
   .area-bawah {
@@ -701,7 +701,7 @@ body.dark-mode .bagian-label {
   }
 
   .text-marquee {
-    bottom: 40px;
+    bottom: 68px;
   }
 
   .icon-marquee {

@@ -75,25 +75,49 @@ function App() {
       }
       el.dataset.jeda = `${Math.min(urutan, 6) * 70}ms`;
       urutan += 1;
-      el.classList.add('muncul');
+      if ('IntersectionObserver' in window) el.classList.add('muncul');
     });
+
+    if (!('IntersectionObserver' in window)) return;
 
     const pengamat = new IntersectionObserver(
       (entri) => {
         entri.forEach((e) => {
           const el = e.target as HTMLElement;
-          // jeda bertingkat hanya saat masuk; keluar layar langsung
-          el.style.transitionDelay = e.isIntersecting
-            ? (el.dataset.jeda ?? '0ms')
-            : '0ms';
-          el.classList.toggle('terlihat', e.isIntersecting);
+
+          if (e.isIntersecting) {
+            el.style.transitionDelay = el.dataset.jeda ?? '0ms';
+            el.classList.add('terlihat');
+            return;
+          }
+
+          // Hanya sembunyikan lagi kalau elemen keluar lewat BAWAH, yaitu
+          // belum terlewati. Kalau keluar lewat atas dan dibiarkan
+          // tersembunyi, menggulir balik meninggalkan area kosong.
+          if (e.boundingClientRect.top > 0) {
+            el.style.transitionDelay = '0ms';
+            el.classList.remove('terlihat');
+          }
         });
       },
       { rootMargin: '0px 0px -12% 0px', threshold: 0.15 },
     );
 
     sasaran.forEach((el) => pengamat.observe(el));
-    return () => pengamat.disconnect();
+
+    // Jaring pengaman: kalau sampai 1,5 detik tidak ada satu pun elemen yang
+    // muncul, observer-nya bermasalah. Lebih baik animasi dimatikan daripada
+    // isi situs tersembunyi permanen.
+    const pengaman = window.setTimeout(() => {
+      if (!document.querySelector('.muncul.terlihat')) {
+        sasaran.forEach((el) => el.classList.remove('muncul'));
+      }
+    }, 1500);
+
+    return () => {
+      window.clearTimeout(pengaman);
+      pengamat.disconnect();
+    };
   }, []);
 
   return (
