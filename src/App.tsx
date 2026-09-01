@@ -162,10 +162,8 @@ function App() {
       </nav>
 
       <div className='content-container'>
-        {/* Slot foto. Ganti isi div ini dengan:
-            <img src='/foto.jpg' alt='Lewi Maropo' /> */}
         <div className='foto-slot'>
-          <span>Foto</span>
+          <img src='/foto.webp' alt='Lewi Maropo' />
         </div>
       </div>
 
