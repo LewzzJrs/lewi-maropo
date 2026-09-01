@@ -76,7 +76,7 @@ const sertifikasi: { nama: string; penerbit: string; tahun: string }[] = [
 
 export default function Resume() {
   return (
-    <div className='dynamic-section resume'>
+    <div className='resume'>
       <section className='resume-bagian'>
         <p className='resume-nomor'>01 / Experience</p>
         {pengalaman.map((item) => (

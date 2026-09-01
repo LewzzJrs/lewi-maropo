@@ -48,6 +48,52 @@ function App() {
     return () => pengamat.disconnect();
   }, []);
 
+  // Elemen muncul perlahan saat masuk layar. Class 'muncul' ditambahkan
+  // lewat JS supaya tanpa JS isinya tetap terlihat, bukan tersembunyi.
+  useEffect(() => {
+    const sasaran = document.querySelectorAll<HTMLElement>(
+      [
+        '.bagian-label',
+        '.project-list li',
+        '.skill-badge',
+        '.resume-nomor',
+        '.resume-item',
+        '.contact-title',
+        '.contact-item',
+        '.foto-slot',
+      ].join(', '),
+    );
+
+    let sebelumnya: Element | null = null;
+    let urutan = 0;
+
+    sasaran.forEach((el) => {
+      const induk = el.closest('.bagian');
+      if (induk !== sebelumnya) {
+        sebelumnya = induk;
+        urutan = 0;
+      }
+      el.style.transitionDelay = `${Math.min(urutan, 6) * 70}ms`;
+      urutan += 1;
+      el.classList.add('muncul');
+    });
+
+    const pengamat = new IntersectionObserver(
+      (entri) => {
+        entri.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('terlihat');
+            pengamat.unobserve(e.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.15 },
+    );
+
+    sasaran.forEach((el) => pengamat.observe(el));
+    return () => pengamat.disconnect();
+  }, []);
+
   return (
     <>
       <div className='frame-container'>

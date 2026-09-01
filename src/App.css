@@ -345,19 +345,27 @@ body.dark-mode .marquee-svg-only svg {
   opacity: 1;
 }
 
-@keyframes geserDariKanan {
-  0% {
-    opacity: 0;
-    transform: translateX(50px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
+/* Muncul perlahan saat elemen masuk layar.
+   .muncul dipasang lewat JS, jadi tanpa JS isinya tetap tampil. */
+.muncul {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.dynamic-section {
-  animation: geserDariKanan 5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.muncul.terlihat {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .muncul {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .social-links-external {

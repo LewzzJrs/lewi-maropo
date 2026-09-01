@@ -1,6 +1,6 @@
 export default function Contact() {
   return (
-    <div className="dynamic-section">
+    <div className="contact">
       <h2 className="contact-title">Let's build something exceptional together.</h2>
       
       <div className="contact-links">

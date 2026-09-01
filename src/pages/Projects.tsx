@@ -1,6 +1,6 @@
 export default function Projects() {
   return (
-    <div className="dynamic-section">
+    <div className="projects">
       <ul className="project-list">
         <li>
           <h3>Modern Web Applications</h3>
