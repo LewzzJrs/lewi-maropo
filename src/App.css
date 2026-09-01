@@ -5,14 +5,14 @@
 }
 
 #root {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   padding: 2.5vw;
   position: relative;
-  overflow: hidden;
 }
 
 body {
+  overflow-x: hidden;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background-color: #e6e6e4;
   color: #111111;
@@ -31,8 +31,8 @@ body.dark-mode {
   width: 95vw;
   max-width: 1600px;
   margin: 2vh auto;
-  /* margin 2vh atas+bawah ikut dihitung agar tidak terpotong overflow:hidden */
-  height: calc(100% - 4vh);
+  /* frame tetap pas satu layar; isi halaman ada di .area-bawah */
+  height: calc(100vh - 9vh);
   border: 1px solid #333;
   transition: border-color 0.3s ease;
 }
@@ -390,10 +390,6 @@ body.dark-mode .marquee-svg-only svg {
 
 /* === Halaman /resume (template) === */
 .resume {
-  text-align: left;
-  max-height: 46vh;
-  overflow-y: auto;
-  padding-right: 14px;
   font-weight: 400;
 }
 
@@ -459,6 +455,60 @@ body.dark-mode .resume-org {
 .resume-poin li::marker {
   color: currentColor;
   opacity: 0.45;
+}
+
+/* Slot foto di kotak kanan frame atas. */
+.foto-slot {
+  width: 220px;
+  height: 280px;
+  margin-left: auto;
+  border: 1px solid currentColor;
+  display: grid;
+  place-items: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  opacity: 0.4;
+}
+
+.foto-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.foto-slot img:hover {
+  filter: grayscale(0%);
+}
+
+/* Area di bawah marquee: isi halaman, mengalir ke bawah. */
+.area-bawah {
+  width: 95vw;
+  max-width: 1600px;
+  margin: 0 auto 2vh;
+  padding: 64px 40px 80px;
+  border: 1px solid #333;
+  text-align: left;
+  transition: border-color 0.3s ease;
+}
+
+body.dark-mode .area-bawah {
+  border-color: #666;
+}
+
+.area-bawah .skills-grid {
+  justify-content: flex-start;
+}
+
+.area-bawah .contact-links {
+  align-items: flex-start;
+}
+
+.area-bawah .project-list li:hover {
+  transform: translateX(8px);
 }
 
 @media (max-width: 768px) {
@@ -592,10 +642,17 @@ body.dark-mode .resume-org {
     align-items: flex-start;
   }
 
-  .resume {
-    max-height: none;
-    overflow-y: visible;
-    padding-right: 0;
+  .foto-slot {
+    width: 100%;
+    max-width: 200px;
+    height: 250px;
+    margin: 0;
+  }
+
+  .area-bawah {
+    width: 100%;
+    padding: 40px 20px 60px;
+    margin-bottom: 0;
   }
 
   .marquee-container {

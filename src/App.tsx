@@ -22,7 +22,8 @@ function App() {
   }, [isDarkMode]);
 
   return (
-    <div className='frame-container'>
+    <>
+      <div className='frame-container'>
       <div className='social-links-external'>
         <a
           href='https://linkedin.com/in/tumbukz'
@@ -121,12 +122,11 @@ function App() {
       </nav>
 
       <div className='content-container'>
-        <Routes>
-          <Route path='/' element={<Projects />} />
-          <Route path='/skills' element={<Skills />} />
-          <Route path='/contact' element={<Contact />} />
-          <Route path='/resume' element={<Resume />} />
-        </Routes>
+        {/* Slot foto. Ganti isi div ini dengan:
+            <img src='/foto.jpg' alt='Lewi Maropo' /> */}
+        <div className='foto-slot'>
+          <span>Foto</span>
+        </div>
       </div>
 
       <div className='marquee-container text-marquee'>
@@ -164,7 +164,18 @@ function App() {
       </div>
 
       <Analytics />
-    </div>
+      </div>
+
+      {/* Area di bawah marquee: isi halaman yang sedang aktif. */}
+      <div className='area-bawah'>
+        <Routes>
+          <Route path='/' element={<Projects />} />
+          <Route path='/skills' element={<Skills />} />
+          <Route path='/contact' element={<Contact />} />
+          <Route path='/resume' element={<Resume />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 
