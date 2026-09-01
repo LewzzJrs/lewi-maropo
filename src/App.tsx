@@ -73,7 +73,7 @@ function App() {
         sebelumnya = induk;
         urutan = 0;
       }
-      el.style.transitionDelay = `${Math.min(urutan, 6) * 70}ms`;
+      el.dataset.jeda = `${Math.min(urutan, 6) * 70}ms`;
       urutan += 1;
       el.classList.add('muncul');
     });
@@ -81,10 +81,12 @@ function App() {
     const pengamat = new IntersectionObserver(
       (entri) => {
         entri.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('terlihat');
-            pengamat.unobserve(e.target);
-          }
+          const el = e.target as HTMLElement;
+          // jeda bertingkat hanya saat masuk; keluar layar langsung
+          el.style.transitionDelay = e.isIntersecting
+            ? (el.dataset.jeda ?? '0ms')
+            : '0ms';
+          el.classList.toggle('terlihat', e.isIntersecting);
         });
       },
       { rootMargin: '0px 0px -12% 0px', threshold: 0.15 },
