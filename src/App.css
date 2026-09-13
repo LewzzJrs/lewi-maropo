@@ -549,6 +549,80 @@ body.dark-mode .bagian-label {
   }
 }
 
+/* === Game dino === */
+.game {
+  max-width: 600px;
+}
+
+.game-papan {
+  position: relative;
+  border: 1px solid currentColor;
+  padding: 12px;
+}
+
+.game-kanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 600 / 180;
+  outline: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.game-kanvas:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+.game-skor {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  display: flex;
+  gap: 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  pointer-events: none;
+}
+
+.game-rekor {
+  opacity: 0.45;
+}
+
+.game-petunjuk {
+  margin-top: 14px;
+  font-size: 0.85rem;
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+.game-tombol {
+  margin-top: 12px;
+  background: none;
+  border: 1px solid currentColor;
+  border-radius: 20px;
+  color: inherit;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.game-tombol:hover {
+  opacity: 0.6;
+}
+
+.game-tombol:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
 @media (max-width: 768px) {
   #root {
     padding: 15px;
@@ -678,6 +752,16 @@ body.dark-mode .bagian-label {
 
   .contact-links {
     align-items: flex-start;
+  }
+
+  .game-papan {
+    padding: 8px;
+  }
+
+  .game-skor {
+    top: 10px;
+    right: 12px;
+    font-size: 0.7rem;
   }
 
   .foto-slot {

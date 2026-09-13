@@ -64,7 +64,7 @@ const pendidikan: { jenjang: string; institusi: string; catatan: string }[] = [
   },
   {
     jenjang: 'Consectetur Adipiscing',
-    institusi: 'SMK Elit Tempor',
+    institusi: 'SMA Kristen Kalam Kudus',
     catatan: 'Lulus 2023',
   },
 ];
