@@ -63,7 +63,7 @@ const pendidikan: { jenjang: string; institusi: string; catatan: string }[] = [
     catatan: 'Lorem 2024 - Sekarang',
   },
   {
-    jenjang: 'Consectetur Adipiscing',
+    jenjang: ' ',
     institusi: 'SMA Kristen Kalam Kudus',
     catatan: 'Lulus 2023',
   },
