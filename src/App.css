@@ -551,13 +551,17 @@ body.dark-mode .bagian-label {
 
 /* === Game dino === */
 .game {
+  position: absolute;
+  top: 50%;
+  left: 220px;
+  right: 320px;
+  transform: translateY(-50%);
   max-width: 600px;
+  margin: 0 auto;
 }
 
 .game-papan {
   position: relative;
-  border: 1px solid currentColor;
-  padding: 12px;
 }
 
 .game-kanvas {
@@ -577,8 +581,8 @@ body.dark-mode .bagian-label {
 
 .game-skor {
   position: absolute;
-  top: 14px;
-  right: 16px;
+  top: 2px;
+  right: 4px;
   display: flex;
   gap: 14px;
   font-size: 0.8rem;
@@ -754,13 +758,16 @@ body.dark-mode .bagian-label {
     align-items: flex-start;
   }
 
-  .game-papan {
-    padding: 8px;
+  .game {
+    position: static;
+    transform: none;
+    left: auto;
+    right: auto;
+    margin: 28px 0 0;
+    max-width: 100%;
   }
 
   .game-skor {
-    top: 10px;
-    right: 12px;
     font-size: 0.7rem;
   }
 

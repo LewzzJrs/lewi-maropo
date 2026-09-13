@@ -14,7 +14,6 @@ const bagian = [
   { id: 'skills', label: 'Skills' },
   { id: 'resume', label: 'Resume' },
   { id: 'contact', label: 'Contact' },
-  { id: 'game', label: 'Game' },
 ];
 
 function App() {
@@ -193,6 +192,8 @@ function App() {
         </div>
       </div>
 
+      <Game />
+
       <div className='marquee-container text-marquee'>
         <div className='marquee-track'>
           {[
@@ -250,11 +251,6 @@ function App() {
         <section id='contact' className='bagian'>
           <p className='bagian-label'>04 / Contact</p>
           <Contact />
-        </section>
-
-        <section id='game' className='bagian'>
-          <p className='bagian-label'>05 / Game</p>
-          <Game />
         </section>
       </div>
     </>
