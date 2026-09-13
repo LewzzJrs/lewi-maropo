@@ -35,7 +35,7 @@ const proyek: { judul: string; poin: string[] }[] = [
   {
     judul: 'Lorem Ipsum Platform',
     poin: [
-      'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.',
+      'Santo Putra Oil.',
       'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur.',
       'Technical note: describe one specific problem and how you solved it.',
     ],
@@ -58,12 +58,12 @@ const keahlian: { kelompok: string; isi: string[] }[] = [
 
 const pendidikan: { jenjang: string; institusi: string; catatan: string }[] = [
   {
-    jenjang: 'Lorem Ipsum Dolor',
-    institusi: 'Sit Amet University',
-    catatan: 'Lorem 2024 - Present',
+    jenjang: 'Information Systems Major',
+    institusi: 'Telkom University',
+    catatan: '2023 - present',
   },
   {
-    jenjang: ' ',
+    jenjang: ' ', 
     institusi: 'SMA Kristen Kalam Kudus',
     catatan: 'Graduated 2023',
   },
