@@ -37,7 +37,7 @@ const proyek: { judul: string; poin: string[] }[] = [
     poin: [
       'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.',
       'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet consectetur.',
-      'Catatan teknis: jelaskan satu masalah spesifik dan bagaimana kamu menyelesaikannya.',
+      'Technical note: describe one specific problem and how you solved it.',
     ],
   },
   {
@@ -50,22 +50,22 @@ const proyek: { judul: string; poin: string[] }[] = [
 ];
 
 const keahlian: { kelompok: string; isi: string[] }[] = [
-  { kelompok: 'Bahasa', isi: ['Lorem', 'Ipsum', 'Dolor'] },
+  { kelompok: 'Languages', isi: ['Lorem', 'Ipsum', 'Dolor'] },
   { kelompok: 'Framework', isi: ['Sit', 'Amet', 'Consectetur'] },
-  { kelompok: 'Basis Data', isi: ['Adipiscing', 'Elit'] },
+  { kelompok: 'Databases', isi: ['Adipiscing', 'Elit'] },
   { kelompok: 'Tools', isi: ['Tempor', 'Incididunt', 'Labore'] },
 ];
 
 const pendidikan: { jenjang: string; institusi: string; catatan: string }[] = [
   {
     jenjang: 'Lorem Ipsum Dolor',
-    institusi: 'Universitas Sit Amet',
-    catatan: 'Lorem 2024 - Sekarang',
+    institusi: 'Sit Amet University',
+    catatan: 'Lorem 2024 - Present',
   },
   {
     jenjang: ' ',
     institusi: 'SMA Kristen Kalam Kudus',
-    catatan: 'Lulus 2023',
+    catatan: 'Graduated 2023',
   },
 ];
 

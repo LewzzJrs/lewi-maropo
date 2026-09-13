@@ -152,7 +152,7 @@ function App() {
         className='theme-toggle'
         onClick={() => setIsDarkMode(!isDarkMode)}
         aria-pressed={isDarkMode}
-        aria-label={isDarkMode ? 'Ganti ke mode terang' : 'Ganti ke mode gelap'}
+        aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
       >
         <span className='active-theme'>
           {isDarkMode ? '□ LIGHT' : '■ LIGHT'}

@@ -293,7 +293,7 @@ export default function Game() {
           className='game-kanvas'
           tabIndex={0}
           role='application'
-          aria-label='Permainan dinosaurus. Tekan spasi atau ketuk untuk melompat.'
+          aria-label='Dinosaur game. Press space or tap to jump.'
         />
         <div className='game-skor'>
           <span>{String(skor).padStart(5, '0')}</span>
@@ -302,9 +302,9 @@ export default function Game() {
       </div>
 
       <p className='game-petunjuk'>
-        {status === 'siap' && 'Klik papannya, lalu tekan spasi untuk mulai.'}
-        {status === 'main' && 'Spasi atau ketuk untuk melompat.'}
-        {status === 'selesai' && 'Kena! Tekan spasi atau ketuk untuk main lagi.'}
+        {status === 'siap' && 'Click the board, then press space to start.'}
+        {status === 'main' && 'Space or tap to jump.'}
+        {status === 'selesai' && 'Ouch! Press space or tap to play again.'}
       </p>
 
       <button
@@ -315,7 +315,7 @@ export default function Game() {
           refAksi.current();
         }}
       >
-        {status === 'selesai' ? 'Main lagi' : 'Lompat'}
+        {status === 'selesai' ? 'Play again' : 'Jump'}
       </button>
     </div>
   );
