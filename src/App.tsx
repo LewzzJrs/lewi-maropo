@@ -234,7 +234,7 @@ function App() {
       {/* Area di bawah marquee: isi halaman yang sedang aktif. */}
       <div className='area-bawah'>
         <section id='projects' className='bagian'>
-          <p className='bagian-label'>01 / Projects</p>
+          <p className='bagian-label'>01 / What I Do</p>
           <Projects />
         </section>
 

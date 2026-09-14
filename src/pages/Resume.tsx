@@ -11,12 +11,12 @@ interface ItemRiwayat {
 
 const pengalaman: ItemRiwayat[] = [
   {
-    periode: 'Lorem 2025 - Ipsum 2026',
-    peran: 'Lorem Ipsum Developer',
-    organisasi: 'PT. Dolor Sit Amet',
+    periode: '2025',
+    peran: 'Full Stack Developer',
+    organisasi: 'PD. Santo Putra Oil',
     poin: [
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.',
-      'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.',
+      'Build The Web App for the automotive workshop equipment store in Indonesia.',
+      'MarketPlace Layout responsive, Modern technologies for Web, and intersing fot customer',
       'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.',
     ],
   },
