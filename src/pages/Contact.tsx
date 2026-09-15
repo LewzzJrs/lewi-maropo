@@ -13,6 +13,11 @@ export default function Contact() {
           <span className="contact-label">GitHub</span>
           <span className="contact-value">github.com/LewzzJrs</span>
         </a>
+        
+        <a href="https://linkedin.com/in/tumbukz" target="_blank" rel="noreferrer" className="contact-item">
+          <span className="contact-label">LinkedIn</span>
+          <span className="contact-value">linkedin.com/in/tumbukz</span>
+        </a>
       </div>
     </div>
   );
