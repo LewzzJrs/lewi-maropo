@@ -126,7 +126,7 @@ function App() {
       <div className='frame-container'>
       <div className='social-links-external'>
         <a
-          href='https://linkedin.com/in/tumbukz'
+          href='https://linkedin.com/in/lewi-maropo'
           target='_blank'
           rel='noreferrer'
           aria-label='LinkedIn'
