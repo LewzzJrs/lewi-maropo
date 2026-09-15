@@ -11,9 +11,9 @@ const pengalaman: ItemRiwayat[] = [
     peran: 'Full Stack Developer',
     organisasi: 'PD. Santo Putra Oil',
     poin: [
-      'Build The Web App for the automotive workshop equipment store in Indonesia.',
-      'MarketPlace Layout responsive, Modern technologies for Web, and intersing for customer',
-      'Usefull and Easy to use.',
+      'E-commerce for an automotive parts shop: product catalog, product detail, and cart on the storefront.',
+      'Admin area behind protected routes for managing products, sales, and reports.',
+      'React 19 and TypeScript with Tailwind v4 and shadcn/ui on Radix primitives; Supabase for data and authentication.',
     ],
   },
   {
@@ -21,9 +21,9 @@ const pengalaman: ItemRiwayat[] = [
     peran: 'Full Stack Developer',
     organisasi: 'PD. Riloka Mart',
     poin: [
-      'Build The Web App for Supplies Store for small shop/stall.',
-      'MarketPlace Layout responsive, Modern Technologies for Web, and Intersting for customers.',
-      'Usefull and Easy to Use',
+      'Web app for a supplies store serving small shops and stalls.',
+      'Responsive marketplace layout built with modern web technologies.',
+      'Focused on a simple, easy-to-use flow for customers.',
     ],
   },
 ];
