@@ -7,7 +7,7 @@ interface ItemRiwayat {
 
 const pengalaman: ItemRiwayat[] = [
   {
-    periode: '2025',
+    periode: '2026',
     peran: 'Full Stack Developer',
     organisasi: 'PD. Santo Putra Oil',
     poin: [
@@ -17,7 +17,7 @@ const pengalaman: ItemRiwayat[] = [
     ],
   },
   {
-    periode: '2025',
+    periode: '2026',
     peran: 'Full Stack Developer',
     organisasi: 'PD. Riloka Mart',
     poin: [
