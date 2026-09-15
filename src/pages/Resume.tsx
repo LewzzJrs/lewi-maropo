@@ -51,7 +51,6 @@ const proyek: { judul: string; poin: string[] }[] = [
 ];
 
 const keahlian: { kelompok: string; isi: string[] }[] = [
-  { kelompok: 'Spoken languages', isi: ['English', 'Mandarin', 'Indonesian'] },
   { kelompok: 'Programming', isi: ['JavaScript', 'TypeScript', 'Python'] },
   { kelompok: 'Markup & styling', isi: ['HTML', 'CSS', 'Tailwind'] },
   { kelompok: 'Frameworks & UI', isi: ['React', 'Next.js', 'Shadcn', 'Radix'] },
