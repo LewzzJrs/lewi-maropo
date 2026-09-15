@@ -16,17 +16,18 @@ const pengalaman: ItemRiwayat[] = [
     organisasi: 'PD. Santo Putra Oil',
     poin: [
       'Build The Web App for the automotive workshop equipment store in Indonesia.',
-      'MarketPlace Layout responsive, Modern technologies for Web, and intersing fot customer',
-      'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.',
+      'MarketPlace Layout responsive, Modern technologies for Web, and intersing for customer',
+      'Usefull and Easy to use.',
     ],
   },
   {
-    periode: 'Lorem 2024 - Ipsum 2025',
-    peran: 'Consectetur Adipiscing',
-    organisasi: 'CV. Tempor Incididunt',
+    periode: '2025',
+    peran: 'Full Stack Developer',
+    organisasi: 'PD. Riloka Mart',
     poin: [
-      'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.',
-      'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.',
+      'Build The Web App for Supplies Store for small shop/stall.',
+      'MarketPlace Layout responsive, Modern Technologies for Web, and Intersting for customers.',
+      'Usefull and Easy to Use'
     ],
   },
 ];
@@ -50,10 +51,15 @@ const proyek: { judul: string; poin: string[] }[] = [
 ];
 
 const keahlian: { kelompok: string; isi: string[] }[] = [
-  { kelompok: 'Languages', isi: ['Lorem', 'Ipsum', 'Dolor'] },
-  { kelompok: 'Framework', isi: ['Sit', 'Amet', 'Consectetur'] },
-  { kelompok: 'Databases', isi: ['Adipiscing', 'Elit'] },
-  { kelompok: 'Tools', isi: ['Tempor', 'Incididunt', 'Labore'] },
+  { kelompok: 'Languages', isi: ['English', 'Mandarin', 'Indonesia'] },
+  { kelompok: 'Programming', isi: ['JavaScript', 'TypeScript', 'Python'] },
+  { kelompok: 'Markup & styling', isi: ['HTML', 'CSS', 'Tailwind'] },
+  { kelompok: 'Frameworks & UI', isi: ['React', 'Next.js', 'Shadcn', 'Radix'] },
+  {
+    kelompok: 'State, data & forms',
+    isi: ['Redux', 'Zustand', 'React Query', 'React Hook Form', 'Zod'],
+  },
+  { kelompok: 'Tools', isi: ['Vercel'] },
 ];
 
 const pendidikan: { jenjang: string; institusi: string; catatan: string }[] = [
