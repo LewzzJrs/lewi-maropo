@@ -1,4 +1,4 @@
-import { skillsWithIcons } from '../skillsData';
+import { skillsWithIcons } from '@/skillsData';
 
 export default function Skills() {
   return (

@@ -4,14 +4,10 @@
   box-sizing: border-box;
 }
 
-#root {
-  width: 100%;
+body {
+  position: relative;
   min-height: 100vh;
   padding: 2.5vw;
-  position: relative;
-}
-
-body {
   overflow-x: hidden;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background-color: #e6e6e4;
@@ -628,11 +624,8 @@ body.dark-mode .bagian-label {
 }
 
 @media (max-width: 768px) {
-  #root {
+  body {
     padding: 15px;
-    height: auto;
-    min-height: 100vh;
-    overflow-y: auto;
   }
 
   .frame-container {
