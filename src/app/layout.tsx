@@ -1,5 +1,20 @@
 import type { Metadata, Viewport } from 'next';
+import { Lexend_Mega, Public_Sans } from 'next/font/google';
 import './globals.css';
+
+const display = Lexend_Mega({
+  subsets: ['latin'],
+  weight: ['400', '800'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const body = Public_Sans({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-body',
+  display: 'swap',
+});
 
 const deskripsi =
   'Portfolio of Lewi Maropo, a front end developer and software engineer building modern web applications with React, TypeScript, and Next.js.';
@@ -44,7 +59,7 @@ const skripTema = `
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang='en'>
+    <html lang='en' className={`${display.variable} ${body.variable}`}>
       <body suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: skripTema }} />
         {children}
