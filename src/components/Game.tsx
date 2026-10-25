@@ -2,192 +2,199 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-const LEBAR = 600;
-const TINGGI = 180;
-const Y_TANAH = 148;
-const GRAVITASI = 2600;
-const DAYA_LOMPAT = 720;
-const LAJU_AWAL = 260;
-const LAJU_MAKS = 620;
+const WIDTH = 600;
+const HEIGHT = 180;
+const GROUND_Y = 148;
+const GRAVITY = 2600;
+const JUMP_POWER = 720;
+const BASE_SPEED = 260;
+const MAX_SPEED = 620;
 
 const DINO_X = 46;
-const DINO_L = 34;
-const DINO_T = 40;
+const DINO_W = 34;
+const DINO_H = 40;
 
-type Rintangan = {
+type Obstacle = {
   x: number;
   y: number;
-  l: number;
-  t: number;
-  burung: boolean;
+  w: number;
+  h: number;
+  bird: boolean;
 };
 
-type Keadaan = {
-  status: 'siap' | 'main' | 'selesai';
-  tinggiDino: number;
-  lajuVertikal: number;
-  laju: number;
-  jarak: number;
-  rintangan: Rintangan[];
-  jarakSpawn: number;
-  langkahKaki: number;
-  kepak: number;
-  skor: number;
+type Phase = 'ready' | 'playing' | 'over';
+
+type GameState = {
+  phase: Phase;
+  altitude: number;
+  verticalSpeed: number;
+  speed: number;
+  distance: number;
+  obstacles: Obstacle[];
+  spawnGap: number;
+  stride: number;
+  flap: number;
+  score: number;
 };
 
-function keadaanAwal(): Keadaan {
+function initialState(): GameState {
   return {
-    status: 'siap',
-    tinggiDino: 0,
-    lajuVertikal: 0,
-    laju: LAJU_AWAL,
-    jarak: 0,
-    rintangan: [],
-    jarakSpawn: 420,
-    langkahKaki: 0,
-    kepak: 0,
-    skor: 0,
+    phase: 'ready',
+    altitude: 0,
+    verticalSpeed: 0,
+    speed: BASE_SPEED,
+    distance: 0,
+    obstacles: [],
+    spawnGap: 420,
+    stride: 0,
+    flap: 0,
+    score: 0,
   };
 }
 
-function bacaRekor() {
+function readBest() {
   try {
-    return Number(localStorage.getItem('dino-rekor')) || 0;
+    return Number(localStorage.getItem('dino-best')) || 0;
   } catch {
     return 0;
   }
 }
 
 export default function Game() {
-  const refCanvas = useRef<HTMLCanvasElement>(null);
-  const refAksi = useRef<() => void>(() => {});
-  const [skor, setSkor] = useState(0);
-  const [rekor, setRekor] = useState(0);
-  const [status, setStatus] = useState<'siap' | 'main' | 'selesai'>('siap');
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const actionRef = useRef<() => void>(() => {});
+  const [score, setScore] = useState(0);
+  const [best, setBest] = useState(0);
+  const [phase, setPhase] = useState<Phase>('ready');
 
   useEffect(() => {
-    const canvas = refCanvas.current;
+    const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = LEBAR * dpr;
-    canvas.height = TINGGI * dpr;
+    canvas.width = WIDTH * dpr;
+    canvas.height = HEIGHT * dpr;
     ctx.scale(dpr, dpr);
 
-    const rekorAwal = bacaRekor();
-    setRekor(rekorAwal);
+    const startingBest = readBest();
+    setBest(startingBest);
 
-    let g = keadaanAwal();
-    let rekorKini = rekorAwal;
-    let skorTampil = -1;
+    let g = initialState();
+    let currentBest = startingBest;
+    let shownScore = -1;
 
-    const acak = (min: number, maks: number) => min + Math.random() * (maks - min);
+    const randomBetween = (min: number, max: number) =>
+      min + Math.random() * (max - min);
 
-    function buatRintangan() {
-      const pakaiBurung = g.skor > 350 && Math.random() < 0.28;
+    function spawnObstacle() {
+      const useBird = g.score > 350 && Math.random() < 0.28;
 
-      if (pakaiBurung) {
-        const rendah = Math.random() < 0.5;
-        g.rintangan.push({
-          x: LEBAR + 20,
-          y: rendah ? Y_TANAH - 46 : Y_TANAH - 78,
-          l: 32,
-          t: 22,
-          burung: true,
+      if (useBird) {
+        const low = Math.random() < 0.5;
+        g.obstacles.push({
+          x: WIDTH + 20,
+          y: low ? GROUND_Y - 46 : GROUND_Y - 78,
+          w: 32,
+          h: 22,
+          bird: true,
         });
       } else {
-        const jumlah = Math.random() < 0.35 ? 2 : 1;
-        const t = acak(28, 42);
-        g.rintangan.push({
-          x: LEBAR + 20,
-          y: Y_TANAH - t,
-          l: 14 * jumlah + (jumlah - 1) * 4,
-          t,
-          burung: false,
+        const count = Math.random() < 0.35 ? 2 : 1;
+        const h = randomBetween(28, 42);
+        g.obstacles.push({
+          x: WIDTH + 20,
+          y: GROUND_Y - h,
+          w: 14 * count + (count - 1) * 4,
+          h,
+          bird: false,
         });
       }
 
-      g.jarakSpawn = acak(300, 560) * (LAJU_AWAL / g.laju) + 300;
+      g.spawnGap = randomBetween(300, 560) * (BASE_SPEED / g.speed) + 300;
     }
 
-    function lompat() {
-      if (g.status === 'siap') {
-        g = { ...keadaanAwal(), status: 'main' };
-        setStatus('main');
+    function jump() {
+      if (g.phase === 'ready') {
+        g = { ...initialState(), phase: 'playing' };
+        setPhase('playing');
         return;
       }
-      if (g.status === 'selesai') {
-        g = { ...keadaanAwal(), status: 'main' };
-        skorTampil = -1;
-        setStatus('main');
-        setSkor(0);
+      if (g.phase === 'over') {
+        g = { ...initialState(), phase: 'playing' };
+        shownScore = -1;
+        setPhase('playing');
+        setScore(0);
         return;
       }
-      if (g.tinggiDino === 0) g.lajuVertikal = DAYA_LOMPAT;
+      if (g.altitude === 0) g.verticalSpeed = JUMP_POWER;
     }
 
-    refAksi.current = lompat;
+    actionRef.current = jump;
 
-    function tabrakan(r: Rintangan) {
-      const dTop = Y_TANAH - DINO_T - g.tinggiDino;
-      const dx1 = DINO_X + 5;
-      const dx2 = DINO_X + DINO_L - 5;
-      const dy1 = dTop + 4;
-      const dy2 = dTop + DINO_T;
-      return dx2 > r.x + 3 && dx1 < r.x + r.l - 3 && dy2 > r.y + 3 && dy1 < r.y + r.t - 3;
+    function hits(o: Obstacle) {
+      const top = GROUND_Y - DINO_H - g.altitude;
+      const left = DINO_X + 5;
+      const right = DINO_X + DINO_W - 5;
+      const bottom = top + DINO_H;
+      return (
+        right > o.x + 3 &&
+        left < o.x + o.w - 3 &&
+        bottom > o.y + 3 &&
+        top + 4 < o.y + o.h - 3
+      );
     }
 
-    function perbarui(dt: number) {
-      if (g.status !== 'main') return;
+    function update(dt: number) {
+      if (g.phase !== 'playing') return;
 
-      g.laju = Math.min(LAJU_MAKS, LAJU_AWAL + g.skor * 0.32);
-      const maju = g.laju * dt;
-      g.jarak += maju;
-      g.skor = Math.floor(g.jarak / 12);
+      g.speed = Math.min(MAX_SPEED, BASE_SPEED + g.score * 0.32);
+      const step = g.speed * dt;
+      g.distance += step;
+      g.score = Math.floor(g.distance / 12);
 
-      g.lajuVertikal -= GRAVITASI * dt;
-      g.tinggiDino += g.lajuVertikal * dt;
-      if (g.tinggiDino <= 0) {
-        g.tinggiDino = 0;
-        g.lajuVertikal = 0;
-        g.langkahKaki += maju;
+      g.verticalSpeed -= GRAVITY * dt;
+      g.altitude += g.verticalSpeed * dt;
+      if (g.altitude <= 0) {
+        g.altitude = 0;
+        g.verticalSpeed = 0;
+        g.stride += step;
       }
 
-      g.kepak += dt;
-      g.jarakSpawn -= maju;
-      if (g.jarakSpawn <= 0) buatRintangan();
+      g.flap += dt;
+      g.spawnGap -= step;
+      if (g.spawnGap <= 0) spawnObstacle();
 
-      for (const r of g.rintangan) r.x -= maju;
-      g.rintangan = g.rintangan.filter((r) => r.x + r.l > -20);
+      for (const o of g.obstacles) o.x -= step;
+      g.obstacles = g.obstacles.filter((o) => o.x + o.w > -20);
 
-      for (const r of g.rintangan) {
-        if (tabrakan(r)) {
-          g.status = 'selesai';
-          setStatus('selesai');
-          if (g.skor > rekorKini) {
-            rekorKini = g.skor;
-            setRekor(rekorKini);
+      for (const o of g.obstacles) {
+        if (hits(o)) {
+          g.phase = 'over';
+          setPhase('over');
+          if (g.score > currentBest) {
+            currentBest = g.score;
+            setBest(currentBest);
             try {
-              localStorage.setItem('dino-rekor', String(rekorKini));
+              localStorage.setItem('dino-best', String(currentBest));
             } catch {
-              /* mode privat: rekor tidak tersimpan */
+              /* private mode: the best score is not stored */
             }
           }
           break;
         }
       }
 
-      if (g.skor !== skorTampil) {
-        skorTampil = g.skor;
-        setSkor(g.skor);
+      if (g.score !== shownScore) {
+        shownScore = g.score;
+        setScore(g.score);
       }
     }
 
-    function gambarDino(warna: string) {
-      const top = Y_TANAH - DINO_T - g.tinggiDino;
-      ctx!.fillStyle = warna;
+    function drawDino(color: string) {
+      const top = GROUND_Y - DINO_H - g.altitude;
+      ctx!.fillStyle = color;
 
       ctx!.fillRect(DINO_X + 14, top, 20, 15);
       ctx!.fillRect(DINO_X + 30, top + 5, 6, 4);
@@ -195,129 +202,134 @@ export default function Game() {
       ctx!.fillRect(DINO_X, top + 16, 8, 7);
       ctx!.fillRect(DINO_X + 10, top + 27, 8, 9);
 
-      const lari = g.tinggiDino === 0 && Math.floor(g.langkahKaki / 22) % 2 === 0;
-      ctx!.fillRect(DINO_X + 9, top + 34, 6, lari ? 6 : 3);
-      ctx!.fillRect(DINO_X + 19, top + 34, 6, lari ? 3 : 6);
+      const running = g.altitude === 0 && Math.floor(g.stride / 22) % 2 === 0;
+      ctx!.fillRect(DINO_X + 9, top + 34, 6, running ? 6 : 3);
+      ctx!.fillRect(DINO_X + 19, top + 34, 6, running ? 3 : 6);
 
       ctx!.clearRect(DINO_X + 27, top + 4, 3, 3);
     }
 
-    function gambarRintangan(r: Rintangan, warna: string) {
-      ctx!.fillStyle = warna;
-      if (r.burung) {
-        const naik = Math.floor(g.kepak * 8) % 2 === 0;
-        ctx!.fillRect(r.x + 10, r.y + 8, 22, 6);
-        ctx!.fillRect(r.x, r.y + 10, 12, 4);
-        if (naik) ctx!.fillRect(r.x + 12, r.y, 14, 9);
-        else ctx!.fillRect(r.x + 12, r.y + 13, 14, 9);
+    function drawObstacle(o: Obstacle, color: string) {
+      ctx!.fillStyle = color;
+      if (o.bird) {
+        const up = Math.floor(g.flap * 8) % 2 === 0;
+        ctx!.fillRect(o.x + 10, o.y + 8, 22, 6);
+        ctx!.fillRect(o.x, o.y + 10, 12, 4);
+        if (up) ctx!.fillRect(o.x + 12, o.y, 14, 9);
+        else ctx!.fillRect(o.x + 12, o.y + 13, 14, 9);
       } else {
-        const batang = Math.round((r.l + 4) / 18);
-        for (let i = 0; i < batang; i += 1) {
-          const x = r.x + i * 18;
-          ctx!.fillRect(x + 5, r.y, 6, r.t);
-          ctx!.fillRect(x, r.y + r.t * 0.35, 5, 4);
-          ctx!.fillRect(x + 11, r.y + r.t * 0.5, 5, 4);
+        const stalks = Math.round((o.w + 4) / 18);
+        for (let i = 0; i < stalks; i += 1) {
+          const x = o.x + i * 18;
+          ctx!.fillRect(x + 5, o.y, 6, o.h);
+          ctx!.fillRect(x, o.y + o.h * 0.35, 5, 4);
+          ctx!.fillRect(x + 11, o.y + o.h * 0.5, 5, 4);
         }
       }
     }
 
     let raf = 0;
-    let sebelumnya = 0;
-    let terlihat = true;
+    let lastTime = 0;
+    let onScreen = true;
 
-    function bingkai(waktu: number) {
-      const dt = sebelumnya ? Math.min((waktu - sebelumnya) / 1000, 0.05) : 0;
-      sebelumnya = waktu;
+    function frame(time: number) {
+      const dt = lastTime ? Math.min((time - lastTime) / 1000, 0.05) : 0;
+      lastTime = time;
 
-      perbarui(dt);
+      update(dt);
 
-      const warna = getComputedStyle(canvas!).color;
-      ctx!.clearRect(0, 0, LEBAR, TINGGI);
+      const color = getComputedStyle(canvas!).color;
+      ctx!.clearRect(0, 0, WIDTH, HEIGHT);
 
-      ctx!.fillStyle = warna;
+      ctx!.fillStyle = color;
       ctx!.globalAlpha = 0.45;
-      ctx!.fillRect(0, Y_TANAH + 2, LEBAR, 1);
+      ctx!.fillRect(0, GROUND_Y + 2, WIDTH, 1);
       ctx!.globalAlpha = 1;
 
-      gambarDino(warna);
-      for (const r of g.rintangan) gambarRintangan(r, warna);
+      drawDino(color);
+      for (const o of g.obstacles) drawObstacle(o, color);
 
-      raf = requestAnimationFrame(bingkai);
+      raf = requestAnimationFrame(frame);
     }
 
-    raf = requestAnimationFrame(bingkai);
+    raf = requestAnimationFrame(frame);
 
-    const pengamat = new IntersectionObserver(
-      (entri) => {
-        const tampak = entri[0]?.isIntersecting ?? true;
-        if (tampak === terlihat) return;
-        terlihat = tampak;
-        if (tampak) {
-          sebelumnya = 0;
-          raf = requestAnimationFrame(bingkai);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const nowVisible = entries[0]?.isIntersecting ?? true;
+        if (nowVisible === onScreen) return;
+        onScreen = nowVisible;
+        if (nowVisible) {
+          lastTime = 0;
+          raf = requestAnimationFrame(frame);
         } else {
           cancelAnimationFrame(raf);
         }
       },
       { threshold: 0 },
     );
-    pengamat.observe(canvas);
+    observer.observe(canvas);
 
-    function tekan(e: KeyboardEvent) {
-      if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+    function onKeyDown(e: KeyboardEvent) {
+      if (
+        e.key === ' ' ||
+        e.key === 'ArrowUp' ||
+        e.key === 'w' ||
+        e.key === 'W'
+      ) {
         e.preventDefault();
-        lompat();
+        jump();
       }
     }
 
-    function sentuh(e: PointerEvent) {
+    function onPointerDown(e: PointerEvent) {
       e.preventDefault();
       canvas!.focus();
-      lompat();
+      jump();
     }
 
-    canvas.addEventListener('keydown', tekan);
-    canvas.addEventListener('pointerdown', sentuh);
+    canvas.addEventListener('keydown', onKeyDown);
+    canvas.addEventListener('pointerdown', onPointerDown);
 
     return () => {
       cancelAnimationFrame(raf);
-      pengamat.disconnect();
-      canvas.removeEventListener('keydown', tekan);
-      canvas.removeEventListener('pointerdown', sentuh);
+      observer.disconnect();
+      canvas.removeEventListener('keydown', onKeyDown);
+      canvas.removeEventListener('pointerdown', onPointerDown);
     };
   }, []);
 
   return (
     <div className='game'>
-      <div className='game-papan'>
+      <div className='game-board'>
         <canvas
-          ref={refCanvas}
-          className='game-kanvas'
+          ref={canvasRef}
+          className='game-canvas'
           tabIndex={0}
           role='application'
           aria-label='Dinosaur game. Press space or tap to jump.'
         />
-        <div className='game-skor'>
-          <span>{String(skor).padStart(5, '0')}</span>
-          <span className='game-rekor'>HI {String(rekor).padStart(5, '0')}</span>
+        <div className='game-score'>
+          <span>{String(score).padStart(5, '0')}</span>
+          <span className='game-best'>HI {String(best).padStart(5, '0')}</span>
         </div>
       </div>
 
-      <p className='game-petunjuk'>
-        {status === 'siap' && 'Click the board, then press space to start.'}
-        {status === 'main' && 'Space or tap to jump.'}
-        {status === 'selesai' && 'Ouch! Press space or tap to play again.'}
+      <p className='game-hint'>
+        {phase === 'ready' && 'Click the board, then press space to start.'}
+        {phase === 'playing' && 'Space or tap to jump.'}
+        {phase === 'over' && 'Ouch! Press space or tap to play again.'}
       </p>
 
       <button
         type='button'
-        className='game-tombol'
+        className='game-button'
         onClick={() => {
-          refCanvas.current?.focus();
-          refAksi.current();
+          canvasRef.current?.focus();
+          actionRef.current();
         }}
       >
-        {status === 'selesai' ? 'Play again' : 'Jump'}
+        {phase === 'over' ? 'Play again' : 'Jump'}
       </button>
     </div>
   );

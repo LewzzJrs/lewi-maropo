@@ -27,7 +27,7 @@ body.dark-mode {
   width: 95vw;
   max-width: 1600px;
   margin: 2vh auto;
-  /* frame tetap pas satu layar; isi halaman ada di .area-bawah */
+  /* the frame stays one screen tall; page content lives in .content-below */
   height: calc(100vh - 9vh);
   border: 1px solid #333;
   transition: border-color 0.3s ease;
@@ -93,7 +93,7 @@ body.dark-mode .name {
 }
 
 .theme-toggle {
-  /* reset gaya bawaan <button> agar tampil sama seperti sebelumnya */
+  /* reset the default <button> styling so it looks unchanged */
   background: none;
   border: none;
   padding: 0;
@@ -275,7 +275,7 @@ body.dark-mode .text-marquee {
   }
 }
 
-/* Styling Item Teks */
+/* Text marquee items */
 .marquee-item-text {
   display: inline-flex;
   align-items: center;
@@ -304,8 +304,8 @@ body.dark-mode .text-marquee {
   filter: grayscale(100%) brightness(0);
 }
 
-/* Ikon marquee di-invert khusus di dark mode supaya jadi putih,
-   tanpa ikut memutihkan seluruh halaman */
+/* Marquee icons are inverted only in dark mode so they turn white,
+   without washing out the whole page */
 body.dark-mode .marquee-svg-only svg {
   filter: grayscale(100%) brightness(0) invert(1);
 }
@@ -341,9 +341,9 @@ body.dark-mode .marquee-svg-only svg {
   opacity: 1;
 }
 
-/* Muncul perlahan saat elemen masuk layar.
-   .muncul dipasang lewat JS, jadi tanpa JS isinya tetap tampil. */
-.muncul {
+/* Fade in as the element enters the viewport.
+   .reveal is added from JS, so without JS the content still shows. */
+.reveal {
   opacity: 0;
   transform: translateY(24px);
   transition:
@@ -351,13 +351,13 @@ body.dark-mode .marquee-svg-only svg {
     transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.muncul.terlihat {
+.reveal.visible {
   opacity: 1;
   transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .muncul {
+  .reveal {
     opacity: 1;
     transform: none;
     transition: none;
@@ -392,16 +392,16 @@ body.dark-mode .marquee-svg-only svg {
   fill: currentColor;
 }
 
-/* === Halaman /resume (template) === */
+/* === Resume section === */
 .resume {
   font-weight: 400;
 }
 
-.resume-bagian {
+.resume-block {
   margin-bottom: 32px;
 }
 
-.resume-nomor {
+.resume-heading {
   font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -412,7 +412,7 @@ body.dark-mode .marquee-svg-only svg {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-body.dark-mode .resume-nomor {
+body.dark-mode .resume-heading {
   border-bottom-color: rgba(255, 255, 255, 0.15);
 }
 
@@ -420,7 +420,7 @@ body.dark-mode .resume-nomor {
   margin-bottom: 20px;
 }
 
-.resume-periode {
+.resume-period {
   font-size: 0.75rem;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -428,7 +428,7 @@ body.dark-mode .resume-nomor {
   margin-bottom: 2px;
 }
 
-.resume-judul {
+.resume-title {
   font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: -0.3px;
@@ -445,24 +445,24 @@ body.dark-mode .resume-org {
   color: #aaa;
 }
 
-.resume-poin {
+.resume-points {
   list-style: disc outside;
   padding-left: 18px;
   font-size: 0.9rem;
   line-height: 1.6;
 }
 
-.resume-poin li {
+.resume-points li {
   margin-bottom: 4px;
 }
 
-.resume-poin li::marker {
+.resume-points li::marker {
   color: currentColor;
   opacity: 0.45;
 }
 
-/* Slot foto di kotak kanan frame atas. */
-.foto-slot {
+/* Photo slot in the right-hand box of the top frame. */
+.photo-slot {
   width: 240px;
   height: 300px;
   margin-left: auto;
@@ -470,8 +470,8 @@ body.dark-mode .resume-org {
   place-items: center;
 }
 
-/* contain, bukan cover: gambarnya transparan dan tidak boleh terpotong */
-.foto-slot img {
+/* contain, not cover: the image is transparent and must not be cropped */
+.photo-slot img {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -479,12 +479,12 @@ body.dark-mode .resume-org {
   transition: filter 0.4s ease;
 }
 
-.foto-slot img:hover {
+.photo-slot img:hover {
   filter: grayscale(0%);
 }
 
-/* Area di bawah marquee: isi halaman, mengalir ke bawah. */
-.area-bawah {
+/* Below the marquee: page content, flowing downwards. */
+.content-below {
   width: 95vw;
   max-width: 1600px;
   margin: 0 auto 2vh;
@@ -494,37 +494,37 @@ body.dark-mode .resume-org {
   transition: border-color 0.3s ease;
 }
 
-body.dark-mode .area-bawah {
+body.dark-mode .content-below {
   border-color: #666;
 }
 
-.area-bawah .skills-grid {
+.content-below .skills-grid {
   justify-content: flex-start;
 }
 
-.area-bawah .contact-links {
+.content-below .contact-links {
   align-items: flex-start;
 }
 
-.area-bawah .project-list li:hover {
+.content-below .project-list li:hover {
   transform: translateX(8px);
 }
 
-/* Semua bagian tampil sekaligus; tombol nav hanya melompat ke sini. */
+/* Every section is shown at once; nav buttons only jump to them. */
 html {
   scroll-behavior: smooth;
 }
 
-.bagian {
+.section {
   scroll-margin-top: 24px;
   padding-bottom: 72px;
 }
 
-.bagian:last-child {
+.section:last-child {
   padding-bottom: 0;
 }
 
-.bagian-label {
+.section-label {
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -535,7 +535,7 @@ html {
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 
-body.dark-mode .bagian-label {
+body.dark-mode .section-label {
   border-bottom-color: rgba(255, 255, 255, 0.18);
 }
 
@@ -545,7 +545,7 @@ body.dark-mode .bagian-label {
   }
 }
 
-/* === Game dino === */
+/* === Dino game === */
 .game {
   position: absolute;
   top: 50%;
@@ -556,11 +556,11 @@ body.dark-mode .bagian-label {
   margin: 0 auto;
 }
 
-.game-papan {
+.game-board {
   position: relative;
 }
 
-.game-kanvas {
+.game-canvas {
   display: block;
   width: 100%;
   height: auto;
@@ -570,12 +570,12 @@ body.dark-mode .bagian-label {
   touch-action: manipulation;
 }
 
-.game-kanvas:focus-visible {
+.game-canvas:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 4px;
 }
 
-.game-skor {
+.game-score {
   position: absolute;
   top: 2px;
   right: 4px;
@@ -587,18 +587,18 @@ body.dark-mode .bagian-label {
   pointer-events: none;
 }
 
-.game-rekor {
+.game-best {
   opacity: 0.45;
 }
 
-.game-petunjuk {
+.game-hint {
   margin-top: 14px;
   font-size: 0.85rem;
   font-weight: 400;
   opacity: 0.6;
 }
 
-.game-tombol {
+.game-button {
   margin-top: 12px;
   background: none;
   border: 1px solid currentColor;
@@ -614,11 +614,11 @@ body.dark-mode .bagian-label {
   transition: opacity 0.2s ease;
 }
 
-.game-tombol:hover {
+.game-button:hover {
   opacity: 0.6;
 }
 
-.game-tombol:focus-visible {
+.game-button:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 4px;
 }
@@ -760,18 +760,18 @@ body.dark-mode .bagian-label {
     max-width: 100%;
   }
 
-  .game-skor {
+  .game-score {
     font-size: 0.7rem;
   }
 
-  .foto-slot {
+  .photo-slot {
     width: 100%;
     max-width: 240px;
     height: 280px;
     margin: 8px auto 0;
   }
 
-  .area-bawah {
+  .content-below {
     width: 100%;
     padding: 40px 20px 60px;
     margin-bottom: 0;

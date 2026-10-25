@@ -11,7 +11,7 @@ import Contact from '@/components/Contact';
 import Resume from '@/components/Resume';
 import Game from '@/components/Game';
 
-const bagian = [
+const section = [
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
   { id: 'resume', label: 'Resume' },
@@ -19,13 +19,13 @@ const bagian = [
 ];
 
 export default function Home() {
-  // null selama server render; nilai aslinya dibaca dari class yang sudah
-  // dipasang skrip di layout, supaya dark mode tidak berkedip terang dulu.
+  // null while rendering on the server; the real value is read from the class
+  // the layout script already set, so dark mode never flashes light first.
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
 
   useEffect(() => {
-    // Membaca sekali dari DOM yang sudah diubah skrip sebelum hydrate.
-    // Ini kasus "baca dari sistem luar" yang memang dikecualikan aturan ini.
+    // Reads once from the DOM the script mutated before hydration. This is the
+    // "read from an external system" case the rule itself carves out.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsDarkMode(document.body.classList.contains('dark-mode'));
   }, []);
@@ -36,96 +36,95 @@ export default function Home() {
     localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
 
-  // Titik penanda di navigasi mengikuti bagian yang sedang terlihat.
-  const [bagianAktif, setBagianAktif] = useState<string>(bagian[0].id);
+  // The dot in the navigation follows whichever section is on screen.
+  const [activeSection, setActiveSection] = useState<string>(section[0].id);
 
   useEffect(() => {
-    const pengamat = new IntersectionObserver(
-      (entri) => {
-        entri.forEach((e) => {
-          if (e.isIntersecting) setBagianAktif(e.target.id);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) setActiveSection(e.target.id);
         });
       },
       { rootMargin: '-45% 0px -45% 0px' },
     );
 
-    bagian.forEach(({ id }) => {
+    section.forEach(({ id }) => {
       const el = document.getElementById(id);
-      if (el) pengamat.observe(el);
+      if (el) observer.observe(el);
     });
 
-    return () => pengamat.disconnect();
+    return () => observer.disconnect();
   }, []);
 
-  // Elemen muncul perlahan saat masuk layar. Class 'muncul' ditambahkan
-  // lewat JS supaya tanpa JS isinya tetap terlihat, bukan tersembunyi.
+  // Elements fade in as they enter the viewport. The 'reveal' class is added
+  // from JS so that without JS the content stays visible instead of hidden.
   useEffect(() => {
-    const sasaran = document.querySelectorAll<HTMLElement>(
+    const targets = document.querySelectorAll<HTMLElement>(
       [
-        '.bagian-label',
+        '.section-label',
         '.project-list li',
         '.skill-badge',
-        '.resume-nomor',
+        '.resume-heading',
         '.resume-item',
         '.contact-title',
         '.contact-item',
-        '.foto-slot',
+        '.photo-slot',
       ].join(', '),
     );
 
-    let sebelumnya: Element | null = null;
-    let urutan = 0;
+    let previousParent: Element | null = null;
+    let order = 0;
 
-    sasaran.forEach((el) => {
-      const induk = el.closest('.bagian');
-      if (induk !== sebelumnya) {
-        sebelumnya = induk;
-        urutan = 0;
+    targets.forEach((el) => {
+      const parent = el.closest('.section');
+      if (parent !== previousParent) {
+        previousParent = parent;
+        order = 0;
       }
-      el.dataset.jeda = `${Math.min(urutan, 6) * 70}ms`;
-      urutan += 1;
-      if ('IntersectionObserver' in window) el.classList.add('muncul');
+      el.dataset.delay = `${Math.min(order, 6) * 70}ms`;
+      order += 1;
+      if ('IntersectionObserver' in window) el.classList.add('reveal');
     });
 
     if (!('IntersectionObserver' in window)) return;
 
-    const pengamat = new IntersectionObserver(
-      (entri) => {
-        entri.forEach((e) => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
           const el = e.target as HTMLElement;
 
           if (e.isIntersecting) {
-            el.style.transitionDelay = el.dataset.jeda ?? '0ms';
-            el.classList.add('terlihat');
+            el.style.transitionDelay = el.dataset.delay ?? '0ms';
+            el.classList.add('visible');
             return;
           }
 
-          // Hanya sembunyikan lagi kalau elemen keluar lewat BAWAH, yaitu
-          // belum terlewati. Kalau keluar lewat atas dan dibiarkan
-          // tersembunyi, menggulir balik meninggalkan area kosong.
+          // Only hide again when the element leaves through the BOTTOM, meaning
+          // it has not been reached yet. Hiding what left through the top would
+          // leave blank gaps when scrolling back up.
           if (e.boundingClientRect.top > 0) {
             el.style.transitionDelay = '0ms';
-            el.classList.remove('terlihat');
+            el.classList.remove('visible');
           }
         });
       },
       { rootMargin: '0px 0px -12% 0px', threshold: 0.15 },
     );
 
-    sasaran.forEach((el) => pengamat.observe(el));
+    targets.forEach((el) => observer.observe(el));
 
-    // Jaring pengaman: kalau sampai 1,5 detik tidak ada satu pun elemen yang
-    // muncul, observer-nya bermasalah. Lebih baik animasi dimatikan daripada
-    // isi situs tersembunyi permanen.
-    const pengaman = window.setTimeout(() => {
-      if (!document.querySelector('.muncul.terlihat')) {
-        sasaran.forEach((el) => el.classList.remove('muncul'));
+    // Failsafe: if nothing has revealed after 1.5s the observer is broken.
+    // Better to drop the animation than to hide the site permanently.
+    const failsafe = window.setTimeout(() => {
+      if (!document.querySelector('.reveal.visible')) {
+        targets.forEach((el) => el.classList.remove('reveal'));
       }
     }, 1500);
 
     return () => {
-      window.clearTimeout(pengaman);
-      pengamat.disconnect();
+      window.clearTimeout(failsafe);
+      observer.disconnect();
     };
   }, []);
 
@@ -180,12 +179,12 @@ export default function Home() {
 
         <nav className='navigation'>
           <ul>
-            {bagian.map(({ id, label }) => (
+            {section.map(({ id, label }) => (
               <li key={id}>
                 <a href={`#${id}`}>
                   <span
                     className='dot'
-                    style={{ opacity: bagianAktif === id ? 1 : 0 }}
+                    style={{ opacity: activeSection === id ? 1 : 0 }}
                   >
                     •
                   </span>{' '}
@@ -197,7 +196,7 @@ export default function Home() {
         </nav>
 
         <div className='content-container'>
-          <div className='foto-slot'>
+          <div className='photo-slot'>
             <Image
               src='/foto.webp'
               alt='Lewi Maropo'
@@ -247,24 +246,24 @@ export default function Home() {
         <Analytics />
       </div>
 
-      <div className='area-bawah'>
-        <section id='projects' className='bagian'>
-          <p className='bagian-label'>01 / What I Do</p>
+      <div className='content-below'>
+        <section id='projects' className='section'>
+          <p className='section-label'>01 / What I Do</p>
           <Projects />
         </section>
 
-        <section id='skills' className='bagian'>
-          <p className='bagian-label'>02 / Skills</p>
+        <section id='skills' className='section'>
+          <p className='section-label'>02 / Skills</p>
           <Skills />
         </section>
 
-        <section id='resume' className='bagian'>
-          <p className='bagian-label'>03 / Resume</p>
+        <section id='resume' className='section'>
+          <p className='section-label'>03 / Resume</p>
           <Resume />
         </section>
 
-        <section id='contact' className='bagian'>
-          <p className='bagian-label'>04 / Contact</p>
+        <section id='contact' className='section'>
+          <p className='section-label'>04 / Contact</p>
           <Contact />
         </section>
       </div>
