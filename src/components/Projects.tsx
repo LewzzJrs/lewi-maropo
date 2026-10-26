@@ -3,16 +3,16 @@ export default function Projects() {
     <div className="projects">
       <ul className="project-list">
         <li>
-          <h3>Modern Web Applications</h3>
-          <p>Building high-performance apps with Next.js, React, and TypeScript.</p>
+          <h3>Full-stack web apps</h3>
+          <p>Storefronts, chord libraries and social feeds — from the database schema up to the screen, with Next.js, React and TypeScript.</p>
         </li>
         <li>
-          <h3>State & Data Management</h3>
-          <p>Implementing robust state handling using Zustand and server-state via React Query.</p>
+          <h3>Offline-first and installable</h3>
+          <p>Service workers and PWA installs, so pages already opened stay readable with no connection at all.</p>
         </li>
         <li>
-          <h3>Forms & Validation</h3>
-          <p>Creating type-safe, resilient forms with Zod and React Hook Form.</p>
+          <h3>Documents in and out</h3>
+          <p>Importing lyrics and chords from Word, PDF and Google Docs, and exporting a whole setlist back out as one PDF.</p>
         </li>
       </ul>
     </div>

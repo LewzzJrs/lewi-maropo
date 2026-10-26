@@ -20,6 +20,7 @@ const deskripsi =
   'Portfolio of Lewi Maropo, a front end developer and software engineer building modern web applications with React, TypeScript, and Next.js.';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://lewi-maropo.vercel.app'),
   title: 'Lewi Maropo — Front End Developer',
   description: deskripsi,
   manifest: '/manifest.webmanifest',
@@ -37,9 +38,11 @@ export const metadata: Metadata = {
     url: 'https://lewi-maropo.vercel.app/',
     title: 'Lewi Maropo — Front End Developer',
     description: deskripsi,
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
+    images: ['/og-image.png'],
   },
 };
 

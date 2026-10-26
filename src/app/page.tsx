@@ -10,11 +10,13 @@ import Skills from '@/components/Skills';
 import Contact from '@/components/Contact';
 import Resume from '@/components/Resume';
 import Game from '@/components/Game';
+import Work from '@/components/Work';
+import Hire from '@/components/Hire';
 
 const section = [
-  { id: 'projects', label: 'Projects' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'resume', label: 'Resume' },
+  { id: 'build', label: 'Build' },
+  { id: 'path', label: 'Path' },
+  { id: 'work', label: 'Work' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -35,6 +37,23 @@ export default function Home() {
     document.body.classList.toggle('dark-mode', isDarkMode);
     localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
+
+  // Scroll progress for the chapter indicator the pattern asks for.
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      setProgress(max > 0 ? Math.min(window.scrollY / max, 1) : 0);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
 
   // The dot in the navigation follows whichever section is on screen.
   const [activeSection, setActiveSection] = useState<string>(section[0].id);
@@ -63,6 +82,8 @@ export default function Home() {
     const targets = document.querySelectorAll<HTMLElement>(
       [
         '.section-label',
+        '.chapter-title',
+        '.work-card',
         '.project-list li',
         '.skill-badge',
         '.resume-heading',
@@ -130,6 +151,20 @@ export default function Home() {
 
   return (
     <>
+      <div
+        className='progress'
+        role='progressbar'
+        aria-label='Reading progress'
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(progress * 100)}
+      >
+        <div
+          className='progress-bar'
+          style={{ transform: `scaleX(${progress})` }}
+        />
+      </div>
+
       <div className='frame-container'>
         <div className='social-links-external'>
           <a
@@ -207,8 +242,6 @@ export default function Home() {
           </div>
         </div>
 
-        <Game />
-
         <div className='marquee-container text-marquee'>
           <div className='marquee-track'>
             {[
@@ -243,28 +276,59 @@ export default function Home() {
           </div>
         </div>
 
+        <Game />
+
         <Analytics />
       </div>
 
       <div className='content-below'>
-        <section id='projects' className='section'>
-          <p className='section-label'>01 / What I Do</p>
+        <section id='build' className='section chapter chapter-1'>
+          <p className='section-label'>Chapter 01</p>
+          <h2 className='chapter-title'>What I build</h2>
+          <p className='chapter-lede'>
+            Three kinds of problem I keep coming back to, and the tools I reach
+            for when I do.
+          </p>
           <Projects />
-        </section>
-
-        <section id='skills' className='section'>
-          <p className='section-label'>02 / Skills</p>
           <Skills />
+          <a className='chapter-next' href='#path'>
+            How I got here <span aria-hidden='true'>&darr;</span>
+          </a>
         </section>
 
-        <section id='resume' className='section'>
-          <p className='section-label'>03 / Resume</p>
+        <section id='path' className='section chapter chapter-2'>
+          <p className='section-label'>Chapter 02</p>
+          <h2 className='chapter-title'>How I got here</h2>
+          <p className='chapter-lede'>
+            Two shops that needed software, and the schooling either side of
+            them.
+          </p>
           <Resume />
+          <a className='chapter-next' href='#work'>
+            See the work <span aria-hidden='true'>&darr;</span>
+          </a>
         </section>
 
-        <section id='contact' className='section'>
-          <p className='section-label'>04 / Contact</p>
+        <section id='work' className='section chapter chapter-3'>
+          <p className='section-label'>Chapter 03</p>
+          <h2 className='chapter-title'>The work</h2>
+          <p className='chapter-lede'>
+            Two chord apps, a shop, a social feed, and the page you are
+            reading.
+          </p>
+          <Work />
+          <a className='chapter-next' href='#contact'>
+            Get in touch <span aria-hidden='true'>&darr;</span>
+          </a>
+        </section>
+
+        <section id='contact' className='section chapter chapter-climax'>
+          <p className='section-label'>The end</p>
+          <Hire />
           <Contact />
+          <a className='cv-link' href='/cv'>
+            Download CV
+          </a>
         </section>
       </div>
     </>
