@@ -82,6 +82,47 @@ const projects: Project[] = [
     preview: '/work/santo-putra.webp',
   },
   {
+    name: 'Movie Explorer',
+    kind: 'Films · TMDB API',
+    year: '2026',
+    summary:
+      'Browse trending and now-playing films, search as you type, open a detail page with the trailer, cast and similar titles, and keep a list of favourites. Built to a supplied Figma spec for phone and desktop.',
+    stats: [
+      { value: '0.4s', label: 'Debounced search' },
+      { value: 'URL', label: 'Keeps search state' },
+    ],
+    stack: [
+      'React',
+      'TypeScript',
+      'Vite',
+      'TanStack Query',
+      'Zod',
+      'Framer Motion',
+    ],
+    preview: '/work/movie-explorer.webp',
+    live: 'https://movie-explorer-jade-tau.vercel.app',
+  },
+  {
+    name: 'Foody',
+    kind: 'Food ordering · Restaurant app',
+    year: '2026',
+    summary:
+      'A food ordering app over a supplied REST API: browse and filter restaurants, open a menu, fill a cart, check out, and look back through order history. Eleven pages behind a sign-in.',
+    stats: [
+      { value: 'Full flow', label: 'Browse to checkout' },
+      { value: 'Zustand', label: 'Cart and UI state' },
+    ],
+    stack: [
+      'Next.js',
+      'TypeScript',
+      'TanStack Query',
+      'Zustand',
+      'Zod',
+      'shadcn/ui',
+    ],
+    preview: '/work/foody.webp',
+  },
+  {
     name: 'Sociality',
     kind: 'Social media · Photo sharing',
     year: '2026',

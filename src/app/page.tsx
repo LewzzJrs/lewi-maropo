@@ -313,8 +313,7 @@ export default function Home() {
           <p className='section-label'>Chapter 03</p>
           <h2 className='chapter-title'>The work</h2>
           <p className='chapter-lede'>
-            Two chord apps, a shop, a social feed, and the page you are
-            reading.
+            Seven things I built. Five of them open in a new tab from here.
           </p>
           <Work />
           <a className='chapter-next' href='#contact'>

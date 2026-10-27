@@ -26,7 +26,7 @@ export const experience: TimelineEntry[] = [
     ],
   },
   {
-    period: '2026',
+    period: '2025',
     role: 'Full Stack Developer — Freelance',
     organisation: 'PD. Santo Putra Oil',
     points: [
@@ -36,7 +36,7 @@ export const experience: TimelineEntry[] = [
     ],
   },
   {
-    period: '2026',
+    period: '2024',
     role: 'Full Stack Developer — Freelance',
     organisation: 'PD. Riloka Mart',
     points: [
