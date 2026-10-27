@@ -47,15 +47,18 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#111111',
+  themeColor: '#fffbef',
+  colorScheme: 'light',
 };
 
 const skripTema = `
 (function () {
   try {
-    var t = localStorage.getItem('theme');
-    var gelap = t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-    if (gelap) document.body.classList.add('dark-mode');
+    // Light is the default. The device setting is ignored on purpose; only the
+    // toggle on the page decides, and that choice is what gets remembered.
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark-mode');
+    }
   } catch (e) {}
 })();
 `;
