@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Lexend_Mega, Public_Sans } from 'next/font/google';
 import './globals.css';
+import { Analytics } from '@vercel/analytics/next';
 
 const display = Lexend_Mega({
   subsets: ['latin'],
@@ -69,6 +70,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       <body suppressHydrationWarning>
         <script dangerouslySetInnerHTML={{ __html: skripTema }} />
         {children}
+        <Analytics />
       </body>
     </html>
   );
