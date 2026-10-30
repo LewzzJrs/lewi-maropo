@@ -235,8 +235,8 @@ export default function Home() {
             <Image
               src='/foto.webp'
               alt='Lewi Maropo'
-              width={621}
-              height={700}
+              width={600}
+              height={800}
               priority
             />
           </div>

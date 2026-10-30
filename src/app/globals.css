@@ -255,11 +255,13 @@ body {
   overflow: hidden;
 }
 
-/* contain, not cover: the image is transparent and must not be cropped */
+/* cover: the portrait has its own backdrop, so it should fill the slot edge to
+   edge rather than sit inside it with bars */
 .photo-slot img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center top;
   filter: grayscale(100%) contrast(1.15);
   transition: filter var(--mid) ease;
 }
